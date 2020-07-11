@@ -19,13 +19,11 @@ class Generator
   void fill_board()
   {
      fill_diagonal();
-     //fill_rest(0, sqr);
+     Solver solver = new Solver(board, rows);
+     this.board = solver.getBoard();
      
   }
-  //boolean fill_rest()
-  //{
-     
-  //}
+ 
   
 
   void fill_diagonal()

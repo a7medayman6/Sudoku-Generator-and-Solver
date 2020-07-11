@@ -12,6 +12,8 @@ void setup()
    h = height / cols;
    generator = new Generator(rows, cols);
    board = generator.getBoard();
+   
+   
 }
 
 void draw()
