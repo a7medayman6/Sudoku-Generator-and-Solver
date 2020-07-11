@@ -18,21 +18,22 @@ class Solver
   public boolean Solve()
   {
      Pair<Integer, Integer> empty = empty_cell();
-     print_board();
+     //print_board();
      if(empty == null)
          return true;
      int r = empty.getKey();
      int c = empty.getValue();
      for(int num = 1; num<=N; num++)
      {
-       boolean safe = is_safe(r, c, num);
+         boolean safe = is_safe(r, c, num);
          if(safe)
+         {
             board[r][c].setValue(num);
          if(Solve())
            return true;
           
           board[r][c].setValue(0);
-       
+         }
      }
     
      return false;    
@@ -47,7 +48,7 @@ class Solver
         {
            if(board[i][j].getValue() == 0)
            {
-              println(i, j);
+              //println(i, j);
              return new Pair<Integer, Integer>(i, j);
            }
         } 

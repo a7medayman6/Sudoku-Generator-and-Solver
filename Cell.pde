@@ -12,14 +12,14 @@ class Cell
    int rows;
    int cols; 
    //color
-   color col;
+   color col = 0;
    //visited or not
    boolean empty = true;
   
    
    public Cell(int i, int j, int w, int h, int rows, int cols)
    {
-     col = color(255);
+     //col = color(255);
      this.i = i;
      this.j = j;
      this.w = w;
@@ -31,14 +31,15 @@ class Cell
    
    public void show()
    {
-      fill(this.col);
+      noFill();
       stroke(0);
       rect(this.j * h, this.i * w, h - 1, w - 1); 
       textSize(30);
-      fill(0);
+      
       String val = str(value);
       if(value == 0)
           val = "";
+      fill(col);
       text(val, this.j * h + 35, this.i * w + 50);
    }
    
@@ -50,5 +51,9 @@ class Cell
    {
      return this.value;
    }  
+   public void setCol(color col)
+   {
+      this.col = col; 
+   }
   
 }

@@ -7,13 +7,14 @@ class Generator
   int cols = 9;
   Cell board[][];
   int sqr = (int)Math.sqrt(rows); 
-  public Generator(int rows, int cols)
+  public Generator(int N, int k)
   {
-    this.rows = rows;
-    this.cols = cols;
+    this.rows = N;
+    this.cols = N;
     board = new Cell[rows][cols];
     init();
     fill_board();
+    cut_board(k);
   }
 
   void fill_board()
@@ -107,56 +108,25 @@ class Generator
     }
   }
 
+  void cut_board(int k)
+  {
+     Set used = new HashSet<Pair<Integer, Integer>>();
+     for(int i=0; i<k; i++)
+     {
+        int r = generate_random_number()-1;
+        int c = generate_random_number()-1;
+        if(!used.contains(new Pair<Integer, Integer>(r,c)))
+        {
+          board[r][c].setValue(0);
+          board[r][c].setCol(color(0, 102, 153));
+        }
+        else
+          i--;
+     }
+  }
+
   public Cell[][] getBoard()
   {
     return board;
   }
 }
-
-
-
-//  boolean fill_rest(int i, int j)
-//  {
-//     int N = rows;
-//     if (j>=N && i<N-1) 
-//        { 
-//            i = i + 1; 
-//            j = 0; 
-//        } 
-//        if (i>=N && j>=N) 
-//            return true; 
-  
-//        if (i < sqr) 
-//        { 
-//            if (j < sqr) 
-//                j = sqr; 
-//        } 
-//        else if (i < N-sqr) 
-//        { 
-//            if (j==(int)(i/sqr)*sqr) 
-//                j =  j + sqr; 
-//        } 
-//        else
-//        { 
-//            if (j == N-sqr) 
-//            { 
-//                i = i + 1; 
-//                j = 0; 
-//                if (i>=N) 
-//                    return true; 
-//            } 
-//        } 
-  
-//        for (int num = 1; num<=N; num++) 
-//        { 
-//            if (is_safe(i, j, num)) 
-//            { 
-//                board[i][j].setValue(num); 
-//                if (fill_rest(i, j+1)) 
-//                    return true; 
-  
-//                board[i][j].setValue(0); 
-//            } 
-//        } 
-//        return false;
-//  }
