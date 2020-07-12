@@ -117,6 +117,8 @@ class Generator
         int c = generate_random_number()-1;
         if(!used.contains(new Pair<Integer, Integer>(r,c)))
         {
+          
+          used.add(new Pair<Integer, Integer>(r,c));
           board[r][c].setValue(0);
           board[r][c].setCol(color(0, 102, 153));
         }

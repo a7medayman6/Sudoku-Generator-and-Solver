@@ -4,13 +4,14 @@ Cell board[][];
 Generator generator;
 Solver solver;
 
+int number_of_empty_cells = 60;
 void setup()
 {
-   size(800, 805);
+   size(800, 810);
    background(255);
-   w = width / N - 5;
+   w = width / N - 10;
    h = height / N;
-   generator = new Generator(N, 40);
+   generator = new Generator(N, number_of_empty_cells);
    board = generator.getBoard();
   
    
@@ -29,10 +30,14 @@ void draw()
      {
        exit();  
      }
+     if(key == 'a')
+     {
+        setup(); 
+     }
   }
    fill(0);
    textSize(20);
-   text("Press SPACE to see the solution.                                          Press ENTER to exit.", 10, 770);
+   text(":SPACE = display solution.\n:a = again.\n:ENTER = exit.", 10, 730);
    show();
 }
 
