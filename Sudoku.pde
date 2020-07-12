@@ -1,5 +1,3 @@
-PFont mono;
-
 int w, h;
 int N = 9;
 Cell board[][];

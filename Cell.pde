@@ -32,6 +32,20 @@ class Cell
    public void show()
    {
       noFill();
+      
+      if(this.j%3 == 0 && this.j != 0)
+      {
+        strokeWeight(3);
+        stroke(255,0,0);
+        line(this.j * h, this.i * w, this.j * h, this.i * w + h - 8 );
+      }
+      if(this.i%3 == 0 && this.i != 0)
+      {
+        stroke(255,0,0);
+        strokeWeight(3);
+        line(this.j * h, this.i * w, this.j * h + w + 3, this.i * w  );
+      }
+      strokeWeight(1);
       stroke(0);
       rect(this.j * h, this.i * w, h - 1, w - 1); 
       textSize(30);
