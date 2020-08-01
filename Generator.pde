@@ -1,109 +1,81 @@
 import java.util.Set;
 import java.util.HashSet;
 
-class Generator
+//Inheritance 
+class Generator extends Game
 {
-  int rows = 9;
-  int cols = 9;
-  Cell board[][];
-  int sqr = (int)Math.sqrt(rows); 
-  public Generator(int N, int k)
+  
+  private int k;
+  private int w;
+  private int h;
+  public Generator(int N, int k, int w, int h)
   {
-    this.rows = N;
-    this.cols = N;
-    board = new Cell[rows][cols];
+    super(N);
+    this.k = k;
+    this.w = w;
+    this.h = h;
+    board = new Cell[N][N];
+    start();
+    
+  }
+  public void start()
+  {
+    //creating objeccts from the cell class to initialize the board
     init();
+    //fill the whole board
     fill_board();
+    //remove k numbers from the fully filled board
     cut_board(k);
   }
-
   void fill_board()
   {
+     //initialize the board with some random values in the diagonal bands
      fill_diagonal();
-     Solver solver = new Solver(board, rows);
+     //fill the rest of the board by solving the sudoku board
+     Solver solver = new Solver(board, N);
      this.board = solver.getBoard();
-     
   }
  
-  
-
   void fill_diagonal()
   {
-    for (int i=0; i<rows; i+=3)
+    for (int i=0; i<N; i+=3)
     {
       fill_square(i, i);
     }
   }
+  
   void fill_square(int r, int c)
   {
-    Set used = new HashSet<Integer>();
-    
+   
     for (int i = r; i<r+3; i++)
     {
       for (int j = c; j<c+3; j++)
       {
-        int n = generate_random_number();  
-        boolean safe = is_safe(i, j, n);
-        if (!used.contains(n) && safe)
+        int n = generate_random_number();
+        boolean safe = Checker.is_safe(board, i, j, n, N);
+        if (safe)
         {
           board[i][j].setValue(n);
-          used.add(n);
-          //println(str(i) + "\t" + str(j)); 
         } 
         else
-          j--;
-        //print(safe); 
+          j--; 
       }
     }
-  }
-  boolean is_safe(int r, int c, int n)
-  {
-    return check_row(r, n) && check_col(c, n) && check_square(r-r%sqr, c-c%sqr, n);
-  }
-  boolean check_row(int r, int n)
-  {
-    for(int i=0; i<r; i++)
-    {
-       if(board[r][i].getValue() == n)
-         return false;
-    }
-    return true;
-  }
-  boolean check_col(int c, int n)
-  {
-    for(int i=0; i<c; i++)
-    {
-       if(board[i][c].getValue() == n)
-         return false;
-    }
-    return true;
-  }
-  boolean check_square(int r, int c, int n)
-  {
-    for (int i = 0; i<sqr; i++)
-    {
-      for (int j = 0; j<sqr; j++)
-      { 
-          if(board[r + i][c + j].getValue() == n)
-              return false;
-      }
-    }
-    return true;
   }
   
   
   int generate_random_number()
   {
-    return (int) Math.floor((Math.random()*rows+1));
+    return (int) Math.floor((Math.random()*N+1));
   }
 
   void init()
   {
-    for (int i=0; i<rows; i++)
+    for (int i=0; i<N; i++)
     {
-      for (int j=0; j<cols; j++)
+      for (int j=0; j<N; j++)
       {
-        board[i][j] = new Cell(i, j, w, h, rows, cols);
+        board[i][j] = new Cell(i, j, w, h, N);
       }
     }
   }
@@ -120,15 +92,12 @@ class Generator
           
           used.add(new Pair<Integer, Integer>(r,c));
           board[r][c].setValue(0);
-          board[r][c].setCol(color(0, 102, 153));
+          board[r][c].setBlue(true);
         }
         else
           i--;
      }
   }
 
-  public Cell[][] getBoard()
-  {
-    return board;
-  }
+  
 }

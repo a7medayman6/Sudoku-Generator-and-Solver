@@ -9,26 +9,27 @@ class Cell
    int w;
    int h;
    //grid
-   int rows;
-   int cols; 
+   int N;
    //color
-   color col = 0;
+   int col = 0;
+   
    //visited or not
    boolean empty = true;
+   private boolean blue = false;
   
    
-   public Cell(int i, int j, int w, int h, int rows, int cols)
+   public Cell(int i, int j, int w, int h, int N)
    {
      //col = color(255);
      this.i = i;
      this.j = j;
      this.w = w;
      this.h = h;
-     this.rows = rows;
-     this.cols = cols;
+     this.N = N;
      this.value = 0;
    }
    
+   /*
    public void show()
    {
       noFill();
@@ -56,7 +57,7 @@ class Cell
       fill(col);
       text(val, this.j * h + 35, this.i * w + 50);
    }
-   
+   */
    public void setValue(int value)
    {
      this.value = value;
@@ -68,6 +69,10 @@ class Cell
    public void setCol(color col)
    {
       this.col = col; 
+   }
+   public void setBlue(boolean blue)
+   {
+     this.blue = blue;
    }
   
 }

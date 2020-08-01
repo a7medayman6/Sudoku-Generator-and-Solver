@@ -1,20 +1,20 @@
 import javafx.util.Pair;
 
-class Solver
+//Inheritance 
+class Solver extends Game
 {
  
-  Cell board[][];
-  int N;
-  int sqr;
   
   public Solver(Cell [][]board, int N)
   {
+     super(N);
      this.board = board; 
-     this.N = N; 
-     this.sqr = (int) Math.sqrt(N);
-     Solve();
+     start();
   }
-  
+  public void start()
+  {
+    Solve();
+  }
   public boolean Solve()
   {
      Pair<Integer, Integer> empty = empty_cell();
@@ -23,16 +23,17 @@ class Solver
          return true;
      int r = empty.getKey();
      int c = empty.getValue();
+     
      for(int num = 1; num<=N; num++)
      {
-         boolean safe = is_safe(r, c, num);
+         boolean safe = Checker.is_safe(board, r, c, num, N);
          if(safe)
          {
             board[r][c].setValue(num);
-         if(Solve())
-           return true;
+            if(Solve())
+               return true;
           
-          board[r][c].setValue(0);
+            board[r][c].setValue(0);
          }
      }
     
@@ -48,7 +49,6 @@ class Solver
         {
            if(board[i][j].getValue() == 0)
            {
-              //println(i, j);
              return new Pair<Integer, Integer>(i, j);
            }
         } 
@@ -56,60 +56,13 @@ class Solver
       return null;
   }
   
-  boolean is_safe(int r, int c, int n)
-  {
-    return check_row(r, n) && check_col(c, n) && check_square((int)r-r%sqr, (int)c-c%sqr, n);
-  }
-  boolean check_row(int r, int n)
-  {
-    for(int i=0; i<N; i++)
-    {
-       if(board[r][i].getValue() == n)
-         return false;
-    }
-    return true;
-  }
-  boolean check_col(int c, int n)
-  {
-    for(int i=0; i<N; i++)
-    {
-       if(board[i][c].getValue() == n)
-         return false;
-    }
-    return true;
-  }
-  boolean check_square(int r, int c, int n)
-  {
-    for (int i = 0; i<sqr; i++)
-    {
-      for (int j = 0; j<sqr; j++)
-      { 
-          if(board[r + i][c + j].getValue() == n)
-              return false;
-      }
-    }
-    return true;
-  }
-  
+ 
   public Cell[][] getBoard()
   {
      return board; 
   }
   
-  void print_board()
-  {
-    for (int i = 0; i<N; i++)
-    {
-      for (int j = 0; j<N; j++)
-      { 
-          print(board[i][j].getValue() + "\t");
-      }
-      println();
-    }
-    print("_________________________\n\n");
-    
-  }
-  
+ 
   
   
 }
